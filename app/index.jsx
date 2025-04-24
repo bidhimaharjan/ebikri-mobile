@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Alert,
   StyleSheet,
+  Image
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -61,6 +62,12 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
+      <Image 
+        source={require("../assets/images/eBikri-logo-purple.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+
       <Text style={styles.title}>Welcome Back</Text>
 
       <View style={styles.inputContainer}>
@@ -101,7 +108,7 @@ export default function LoginScreen() {
         {loading ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.buttonText}>Sign In</Text>
+          <Text style={styles.buttonText}>Login</Text>
         )}
       </TouchableOpacity>
     </View>
@@ -114,6 +121,11 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f9fafb",
     justifyContent: "center",
+  },
+  logo: {
+    width: 150,
+    height: 120,
+    alignSelf: "center",
   },
   title: {
     fontSize: 24,
@@ -142,7 +154,7 @@ const styles = StyleSheet.create({
     color: "#111827",
   },
   button: {
-    backgroundColor: "#2563eb",
+    backgroundColor: "#6e4b9c",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",

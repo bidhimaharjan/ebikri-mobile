@@ -12,8 +12,10 @@ export default function AuthLayout() {
       const inAuthGroup = segments[0] === '(auth)';
       
       if (!token && inAuthGroup) {
+        // If no token but trying to access protected route
         router.replace('/');
       } else if (token && !inAuthGroup) {
+        // If has token but trying to access public route
         router.replace('/(auth)/dashboard');
       }
     };
@@ -24,7 +26,8 @@ export default function AuthLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="dashboard" />
-      {/* Other protected screens */}
+      <Stack.Screen name="sales" />
+      <Stack.Screen name="profile" />
     </Stack>
   );
 }
