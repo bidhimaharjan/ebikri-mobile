@@ -33,8 +33,13 @@ export default function Sales() {
   const [yearlyTrends, setYearlyTrends] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
 
-  // fetch sales data using react-query
-  const { data: salesData, isLoading, error, refetch } = useQuery({
+  // fetch sales data using react query
+  const {
+    data: salesData,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["sales"], // unique key for the query
     queryFn: fetchSalesData, // function to fetch sales data
   });
@@ -167,7 +172,8 @@ export default function Sales() {
       datasets: [
         {
           data: validatedData.map((item) => item.revenue),
-          colors: [ // array of colors for each bar
+          colors: [
+            // array of colors for each bar
             (opacity = 1) => `rgba(59, 130, 246, ${opacity})`, // Blue
             (opacity = 1) => `rgba(16, 185, 129, ${opacity})`, // Green
             (opacity = 1) => `rgba(139, 92, 246, ${opacity})`, // Purple
@@ -198,17 +204,20 @@ export default function Sales() {
     propsForHorizontalLabels: { fontSize: 10 },
   };
 
-  // handle logout
+  // function to handle logout
   const handleLogout = async () => {
     try {
+      // clear all stored data
       await AsyncStorage.multiRemove(["authToken", "user"]);
-      router.replace("/");
+      router.replace("/"); // redirect to login screen
+      setMenuVisible(false); // close the menu
+      console.log("Logged out");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
 
-  // check for loading state
+  // handle loading state
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -217,7 +226,7 @@ export default function Sales() {
     );
   }
 
-  // check for empty data after loading completes
+  // handle empty data after loading completes
   if (!isLoading && (!monthlyTrends.length || !yearlyTrends.length)) {
     return (
       <View style={styles.loadingContainer}>
@@ -226,11 +235,22 @@ export default function Sales() {
     );
   }
 
-  // check for error state
+  // handle error state
   if (error) {
+    let errorMessage = "Error loading sales data";
+    if (error.response) {
+      if (error.response.status === 401) {
+        handleLogout();
+        return null; // do not render anything while redirecting
+      } else if (error.response.status === 500) {
+        errorMessage = "Server error. Please try again later.";
+      }
+    }
+
+    // display error message with retry button
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error loading sales data</Text>
+        <Text style={styles.errorText}>{errorMessage}</Text>
         <TouchableOpacity style={styles.retryButton} onPress={() => refetch()}>
           <Text style={styles.retryButtonText}>Retry</Text>
         </TouchableOpacity>
@@ -265,6 +285,7 @@ export default function Sales() {
           onPress={() => setMenuVisible(false)}
         >
           <View style={styles.menuContainer}>
+            {/* Dashboard Menu Item */}
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
@@ -276,6 +297,7 @@ export default function Sales() {
               <Text style={styles.menuItemText}>Dashboard</Text>
             </TouchableOpacity>
 
+            {/* Profile Menu Item */}
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
@@ -287,6 +309,7 @@ export default function Sales() {
               <Text style={styles.menuItemText}>Profile</Text>
             </TouchableOpacity>
 
+            {/* Logout Menu Item */}
             <TouchableOpacity
               style={[styles.menuItem, styles.logoutItem]}
               onPress={() => {
@@ -316,6 +339,7 @@ export default function Sales() {
               Are you sure you want to log out?
             </Text>
             <View style={styles.confirmButtonContainer}>
+              {/* Confirm Logout Button */}
               <TouchableOpacity
                 style={styles.confirmButton}
                 onPress={() => {
@@ -325,6 +349,8 @@ export default function Sales() {
               >
                 <Text style={styles.confirmButtonText}>Confirm</Text>
               </TouchableOpacity>
+
+              {/* Cancel Logout Button */}
               <TouchableOpacity
                 style={[styles.confirmButton, styles.cancelButton]}
                 onPress={() => setLogoutConfirmVisible(false)}
@@ -340,7 +366,7 @@ export default function Sales() {
         </View>
       </Modal>
 
-      {/* View Mode Toggle */}
+      {/* View Mode Toggle (Monthly/Yearly) */}
       <View style={styles.toggleContainer}>
         <TouchableOpacity
           style={[
@@ -376,6 +402,7 @@ export default function Sales() {
         </TouchableOpacity>
       </View>
 
+      {/* Main Content ScrollView */}
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -467,7 +494,11 @@ export default function Sales() {
           </View>
           {topProducts.map((product, index) => (
             <View key={product.productId} style={styles.productCard}>
-              <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">
+              <Text
+                style={styles.productName}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
                 {product.productName} (ID: {product.productId})
               </Text>
               <Text style={styles.productSales}>
@@ -638,7 +669,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#6b7280",
   },
-  // States
+  // Loading & Error States
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
@@ -652,16 +683,17 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 16,
-    marginBottom: 10,
+    textAlign: "center",
   },
   retryButton: {
+    marginTop: 16,
+    padding: 12,
     backgroundColor: "#6e4b9c",
-    padding: 10,
-    borderRadius: 5,
+    borderRadius: 8,
   },
   retryButtonText: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   // Modals
   menuOverlay: {

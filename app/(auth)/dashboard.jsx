@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [menuVisible, setMenuVisible] = useState(false); // state to control menu visibility
   const [logoutConfirmVisible, setLogoutConfirmVisible] = useState(false); // state to control logout confirmation modal visibility
 
-  // fetch dashboard data using react-query
+  // fetch dashboard data using react query
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["dashboard"], // unique key for the query
     queryFn: fetchDashboardData, // function to fetch dashboard data
@@ -43,6 +43,7 @@ export default function Dashboard() {
       await AsyncStorage.multiRemove(["authToken", "user"]);
       router.replace("/"); // redirect to login screen
       setMenuVisible(false); // close the menu
+      console.log("Logged out");
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -107,6 +108,7 @@ export default function Dashboard() {
           onPress={() => setMenuVisible(false)}
         >
           <View style={styles.menuContainer}>
+            {/* Sales Analytics Menu Item */}
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
@@ -118,6 +120,7 @@ export default function Dashboard() {
               <Text style={styles.menuItemText}>Sales Analytics</Text>
             </TouchableOpacity>
 
+            {/* Profile Menu Item */}
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
@@ -129,6 +132,7 @@ export default function Dashboard() {
               <Text style={styles.menuItemText}>Profile</Text>
             </TouchableOpacity>
 
+            {/* Logout Menu Item */}
             <TouchableOpacity
               style={[styles.menuItem, styles.logoutItem]}
               onPress={() => {
@@ -158,6 +162,7 @@ export default function Dashboard() {
               Are you sure you want to log out?
             </Text>
             <View style={styles.confirmButtonContainer}>
+              {/* Confirm Logout Button */}
               <TouchableOpacity
                 style={styles.confirmButton}
                 onPress={() => {
@@ -167,6 +172,8 @@ export default function Dashboard() {
               >
                 <Text style={styles.confirmButtonText}>Confirm</Text>
               </TouchableOpacity>
+
+              {/* Cancel Logout Button */}
               <TouchableOpacity
                 style={[styles.confirmButton, styles.cancelButton]}
                 onPress={() => setLogoutConfirmVisible(false)}
@@ -182,7 +189,7 @@ export default function Dashboard() {
         </View>
       </Modal>
 
-      {/* Main Content */}
+      {/* Main Content ScrollView */}
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -576,7 +583,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
   },
   errorText: {
     color: "red",
@@ -585,9 +591,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   retryButton: {
+    marginTop: 16,
+    padding: 12,
     backgroundColor: "#6e4b9c",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
     borderRadius: 8,
   },
   retryButtonText: {

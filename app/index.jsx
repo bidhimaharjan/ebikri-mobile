@@ -35,7 +35,7 @@ export default function LoginScreen() {
       );
 
       if (!response.ok) {
-        const text = await response.text();  // <-- get the raw text
+        const text = await response.text();  // get the raw text
         throw new Error(text);  // or a custom message
       }
 
@@ -43,12 +43,13 @@ export default function LoginScreen() {
       console.log("Response Data:", data);
 
       if (response.ok) {
-        // Store both token and user data
+        // store both token and user data
         await AsyncStorage.multiSet([
           ["authToken", data.token],
           ["user", JSON.stringify(data.user)],
         ]);
         router.replace("/(auth)/dashboard");
+        console.log("Logged in");
       } else {
         throw new Error(data.message || "Login failed");
       }

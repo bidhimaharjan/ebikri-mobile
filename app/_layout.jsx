@@ -11,14 +11,14 @@ export default function RootLayout() {
   const router = useRouter();
   const segments = useSegments();
 
-  // Create a new QueryClient
+  // create a new QueryClient
   const queryClient = new QueryClient();
 
-  // Check if user is logged in based on the stored auth token
+  // check if user is logged in based on the stored auth token
   const checkAuthStatus = async () => {
     const token = await AsyncStorage.getItem('authToken');
     if (token) {
-      setUser({ token }); // You can also set more user data if needed
+      setUser({ token }); 
     }
     setInitializing(false);
   };
@@ -33,9 +33,9 @@ export default function RootLayout() {
     const inAuthGroup = segments[0] === '(auth)';
 
     if (user && !inAuthGroup) {
-      router.replace('/(auth)/dashboard'); // Redirect to the /dashboard if authenticated
+      router.replace('/(auth)/dashboard'); // redirect to the /dashboard if authenticated
     } else if (!user && inAuthGroup) {
-      router.replace('/'); // Redirect to login if not authenticated
+      router.replace('/'); // redirect to login if not authenticated
     }
   }, [user, initializing]);
 
