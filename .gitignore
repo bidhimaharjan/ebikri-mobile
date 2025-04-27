@@ -9,6 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Environment
+.env
+
 # Native
 *.orig.*
 *.jks
@@ -36,3 +39,7 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+#Authentication
+google-services.json
+GoogleService-Info.plist

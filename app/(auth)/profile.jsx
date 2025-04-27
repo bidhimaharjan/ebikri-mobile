@@ -196,16 +196,18 @@ import {
     mainContainer: {
       flex: 1,
       backgroundColor: "#f3f4f6",
+      padding: 16,
     },
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      paddingHorizontal: 20,
-      paddingTop: 70,
+      paddingHorizontal: 16,
+      paddingTop: 40,
+      paddingBottom: 8,
     },
     menuButton: {
-      padding: 10,
+      padding: 8,
     },
     menuOverlay: {
       flex: 1,
@@ -251,10 +253,9 @@ import {
       paddingTop: 10,
     },
     header: {
-      fontSize: 26,
+      fontSize: 22,
       fontWeight: "bold",
       color: "#1f2937",
-      marginBottom: 4,
     },
     subHeader: {
       fontSize: 14,

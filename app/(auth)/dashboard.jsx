@@ -325,15 +325,13 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 24,
   },
-
   // Header
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingTop: 56,
-    paddingBottom: 8,
   },
   header: {
     fontSize: 22,
@@ -343,7 +341,6 @@ const styles = StyleSheet.create({
   menuButton: {
     padding: 8,
   },
-
   // Sections
   section: {
     marginBottom: 24,
@@ -355,7 +352,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 4,
   },
-
   // Cards
   cardContainer: {
     flexDirection: "row",
@@ -368,7 +364,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     width: "48%",
-    height: 120,
+    height: 125,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
@@ -387,12 +383,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 4,
   },
-
   // Orders & Payments
   ordersPaymentsContainer: {
     flexDirection: "row",
     gap: 12,
-    height: 120,
+    height: 130,
   },
   ordersCard: {
     backgroundColor: "white",
@@ -441,7 +436,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: 'center',
   },
-
   // Marketing Campaigns
   campaignsContainer: {
     gap: 12,
@@ -483,7 +477,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#1f2937",
   },
-
   // Modals
   menuOverlay: {
     flex: 1,
@@ -573,7 +566,6 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: "#374151",
   },
-
   // Loading & Error States
   loadingContainer: {
     flex: 1,

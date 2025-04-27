@@ -167,8 +167,13 @@ export default function Sales() {
       datasets: [
         {
           data: validatedData.map((item) => item.revenue),
-          color: (opacity = 1) => `rgba(34, 197, 94, ${opacity})`,
-          strokeWidth: 2,
+          colors: [ // array of colors for each bar
+            (opacity = 1) => `rgba(59, 130, 246, ${opacity})`, // Blue
+            (opacity = 1) => `rgba(16, 185, 129, ${opacity})`, // Green
+            (opacity = 1) => `rgba(139, 92, 246, ${opacity})`, // Purple
+            (opacity = 1) => `rgba(239, 68, 68, ${opacity})`, // Red
+            (opacity = 1) => `rgba(245, 158, 11, ${opacity})`, // Amber
+          ],
         },
       ],
     };
@@ -186,7 +191,8 @@ export default function Sales() {
     propsForDots: {
       r: "6",
       strokeWidth: "2",
-      stroke: "#ffa726",
+      stroke: "#86efac",
+      fill: "#1eba57",
     },
     propsForVerticalLabels: { fontSize: 10 },
     propsForHorizontalLabels: { fontSize: 10 },
@@ -375,6 +381,7 @@ export default function Sales() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
       >
         {/* Summary Cards Section */}
         <View style={styles.summaryGrid}>
@@ -442,20 +449,25 @@ export default function Sales() {
                 borderRadius: 16,
               }}
               fromZero={true}
+              withCustomBarColorFromData={true}
+              flatColor={true}
             />
           )}
         </View>
 
         {/* Top Products Section */}
         <View style={styles.topProductsContainer}>
-          <Text style={styles.topProductsTitle}>
-            {viewMode === "monthly"
-              ? "Top Products This Month"
-              : "Top Products This Year"}
-          </Text>
+          <View style={styles.topProductsHeader}>
+            <MaterialIcons name="emoji-events" size={24} color="#FFD700" />
+            <Text style={styles.topProductsTitle}>
+              {viewMode === "monthly"
+                ? "Top Products This Month"
+                : "Top Products This Year"}
+            </Text>
+          </View>
           {topProducts.map((product, index) => (
             <View key={product.productId} style={styles.productCard}>
-              <Text style={styles.productName}>
+              <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">
                 {product.productName} (ID: {product.productId})
               </Text>
               <Text style={styles.productSales}>
@@ -474,23 +486,23 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: "#f3f4f6",
-    padding: 20,
-    paddingTop: 70,
   },
   // Header
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginHorizontal: 20,
+    paddingTop: 56,
+    paddingBottom: 8,
   },
   header: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#1f2937",
   },
   menuButton: {
-    padding: 10,
+    padding: 8,
   },
   // Toggle
   toggleContainer: {
@@ -499,6 +511,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "#e5e7eb",
     borderRadius: 8,
+    marginHorizontal: 16,
     padding: 5,
   },
   toggleButton: {
@@ -518,6 +531,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   // Summary Grid
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
   summaryGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -536,24 +553,26 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   revenueCard: {
-    width: "48%", // Left side
+    width: "48%",
   },
   salesCard: {
-    width: "48%", // Top right
+    width: "48%",
     marginBottom: 5,
   },
   growthCard: {
-    width: "48%", // Bottom right
+    width: "48%",
     marginTop: 5,
   },
   summaryLabel: {
     fontSize: 14,
     color: "#6b7280",
     marginBottom: 8,
+    textAlign: 'center',
   },
   summaryValue: {
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: 'center',
   },
   // Chart
   chartContainer: {
@@ -574,6 +593,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1f2937",
     marginBottom: 10,
+    textAlign: 'center',
   },
   // Top Products
   topProductsContainer: {
@@ -586,23 +606,33 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  topProductsTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#1f2937",
+  topProductsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 12,
   },
+  topProductsTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+    marginLeft: 8,
+    textAlign: 'center',
+  },
   productCard: {
-    backgroundColor: "#f9fafb",
+    backgroundColor: '#f9fafb',
     borderRadius: 8,
     padding: 12,
     marginBottom: 8,
+    alignItems: 'center',
   },
   productName: {
     fontSize: 14,
     fontWeight: "500",
     color: "#1f2937",
     marginBottom: 4,
+    textAlign: 'center',
+    width: '100%',
   },
   productSales: {
     fontSize: 12,
