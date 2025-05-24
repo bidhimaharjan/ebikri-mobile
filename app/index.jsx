@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Alert,
   StyleSheet,
-  Image
+  Image,
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,6 +20,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // login handler
   const handleLogin = async () => {
     setLoading(true);
     try {
@@ -35,8 +36,8 @@ export default function LoginScreen() {
       );
 
       if (!response.ok) {
-        const text = await response.text();  // get the raw text
-        throw new Error(text);  // or a custom message
+        const text = await response.text(); // get the raw text
+        throw new Error(text); // or a custom message
       }
 
       const data = await response.json();
@@ -63,7 +64,7 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Image 
+      <Image
         source={require("../assets/images/eBikri-logo-purple.png")}
         style={styles.logo}
         resizeMode="contain"
@@ -71,6 +72,7 @@ export default function LoginScreen() {
 
       <Text style={styles.title}>Welcome Back</Text>
 
+      {/* Email Field */}
       <View style={styles.inputContainer}>
         <Ionicons name="mail-outline" size={20} style={styles.icon} />
         <TextInput
@@ -83,6 +85,7 @@ export default function LoginScreen() {
         />
       </View>
 
+      {/* Password Button */}
       <View style={styles.inputContainer}>
         <Ionicons name="lock-closed-outline" size={20} style={styles.icon} />
         <TextInput
@@ -101,6 +104,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Login Button */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleLogin}
@@ -165,5 +169,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
     fontSize: 16,
-  },
+  }
 });

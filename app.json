@@ -5,13 +5,18 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "com.ebikrimobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ebikrimobile",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.608167953075-ioemd7usrjvbfm5dh4rhulsh29ppqs4r"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,6 +48,15 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-auth-session",
+        {
+          "redirectUri": {
+            "useProxy": true,
+            "native": "com.ebikrimobile://oauthredirect"
+          }
         }
       ],
       "@react-native-firebase/app",

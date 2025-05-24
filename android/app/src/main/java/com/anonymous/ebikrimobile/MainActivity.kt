@@ -1,4 +1,4 @@
-package com.ebikrimobile
+package com.anonymous.ebikrimobile
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

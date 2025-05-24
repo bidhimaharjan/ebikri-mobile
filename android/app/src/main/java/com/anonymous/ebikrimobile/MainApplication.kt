@@ -1,4 +1,4 @@
-package com.ebikrimobile
+package com.anonymous.ebikrimobile
 
 import android.app.Application
 import android.content.res.Configuration
